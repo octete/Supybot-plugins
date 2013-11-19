@@ -87,7 +87,8 @@ httpcodes = {
     '502' : "502 Bad Gateway",
     '503' : "503 Service Unavailable",
     '504' : "504 Gateway Timeout",
-    '505' : "505 HTTP Version Not Supported"}
+    '505' : "505 HTTP Version Not Supported"
+    '666' : "666 Devil Packet Found."} # little easter egg.
 
 class Httpcode(callbacks.Plugin):
     """Add the help for "@plugin help Httpcode" here
