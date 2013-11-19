@@ -97,9 +97,7 @@ class Httpcode(callbacks.Plugin):
     def __init__(self, irc):
     	self.__parent = super(Httpcode, self)
     	self.__parent.__init__(irc)
-    	self.rng = random.Random()
-    	self.rng.seed()
-
+    	
         # Stuff for Supybot
         self.__parent.die()
 
