@@ -33,6 +33,7 @@ from supybot.commands import *
 import supybot.plugins as plugins
 import supybot.ircutils as ircutils
 import supybot.callbacks as callbacks
+
 try:
     from supybot.i18n import PluginInternationalization
     _ = PluginInternationalization('Httpcode')
@@ -41,15 +42,87 @@ except:
     # without the i18n module
     _ = lambda x:x
 
+httpcodes = {
+    '100' : "100 Continue: The client SHOULD continue with its request",
+    '101' : "101 Switching Protocols. The server understands and is " 
+            "willing to comply with the client's request, via the "
+            "Upgrade message header field, for a change in the application "
+            " protocol being used on this connection",
+    '200' : "200 OK. The request has succeded",
+    '201' : "201 Created. The request has been fulfilled and resulted "
+            "in a new resouce being created",
+    '202' : "202 Accepted.",
+    '203' : "203 Non-Authoritative Information",
+    '204' : "204 No Content",
+    '205' : "205 Reset Content",
+    '206' : "206 Partial Content",
+    '300' : "300 Multiple Choices",
+    '301' : "301 Moved Permanently",
+    '302' : "302 Found",
+    '303' : "303 See Other",
+    '304' : "304 Not Modified",
+    '305' : "305 Use Proxy",
+    '306' : "306 Unused. Reserved use.",
+    '307' : "307 Temporary Redirect.",
+    '400' : "400 Bad Request.",
+    '401' : "401 Unauthorized.",
+    '402' : "402 Payment Required.",
+    '403' : "403 Forbidden",
+    '404' : "404 Not Found",
+    '405' : "405 Method Not Allowed",
+    '406' : "406 Not Acceptable",
+    '407' : "407 Proxy Authentication Required",
+    '408' : "408 Request Timeout",
+    '409' : "409 Conflict",
+    '410' : "410 Gone",
+    '411' : "411 Length Required",
+    '412' : "412 Precondition Failed",
+    '413' : "413 Request Entity Too Large",
+    '414' : "414 Request-URI Too Lond",
+    '415' : "415 Unsupported Media Type",
+    '416' : "416 Request Range Not Satisfiable",
+    '417' : "417 Expectation Failed",
+    '500' : "500 Internal Error",
+    '501' : "501 Not Implemented",
+    '502' : "502 Bad Gateway",
+    '503' : "503 Service Unavailable",
+    '504' : "504 Gateway Timeout",
+    '505' : "505 HTTP Version Not Supported"}
+
 class Httpcode(callbacks.Plugin):
     """Add the help for "@plugin help Httpcode" here
     This should describe *how* to use this plugin."""
-    pass
+    
+    def __init__(self, irc):
+    	self.__parent = super(Httpcode, self)
+    	self.__parent.__init__(irc)
+    	self.rng = random.Random()
+    	self.rng.seed()
 
-    def httpcode(self, irc, msg, args, optlist, code):
+        # Stuff for Supybot
+        self.__parent.die()
+
+    def httpcode(self, irc, msg, args):
         """Returns the definition of an HTTP code"""
         channel = msg.args[0]
-        irc.reply('you asked me: %s' % code )
+        irc.reply('you asked me: %s' % len(args) )
+
+    def httpcode(self, irc, msg, args, code):
+        """<http code>
+        
+        Get the description for HTTP code <http code>
+        """
+        if code < 1:
+            irc.error('you wish!')
+            return
+        elif code > 600:
+            irc.error('Not so fast there...')
+            return
+        if httpcodes.has_key(str(code)):
+            irc.reply(httpcodes[str(code)])
+        else:
+            irc.error("I don't know anything about HTTP code %s" % code)
+    httpcode = wrap(httpcode, ['int'])
 
 Class = Httpcode
 

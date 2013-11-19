@@ -33,5 +33,17 @@ from supybot.test import *
 class HttpcodeTestCase(PluginTestCase):
     plugins = ('Httpcode',)
 
+    def testRandom(self):
+    	# difficult to test, let's just make sure it works
+    	self.assertNotError('httpcode 200')
+
+    def testSample(self):
+    	self.assertError('httpcode foo')
+    	self.assertResponse('httpcode 200', '200 OK. The request has succeded')
+    	self.assertRegexp('httpcode 300', '300 Multiple Choices.*')
+
+    def testError(self):
+    	self.assertError('httpcode 0')
+    	self.assertError('httpcode 1000')
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
