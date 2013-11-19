@@ -114,7 +114,7 @@ class Httpcode(callbacks.Plugin):
         if code < 1:
             irc.error('you wish!')
             return
-        elif code > 600:
+        elif code > 600 and code != 666:
             irc.error('Not so fast there...')
             return
         if httpcodes.has_key(str(code)):
