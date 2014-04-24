@@ -82,6 +82,7 @@ httpcodes = {
     '415' : "415 Unsupported Media Type",
     '416' : "416 Request Range Not Satisfiable",
     '417' : "417 Expectation Failed",
+    '418' : "418 I'm a teapot",
     '500' : "500 Internal Error",
     '501' : "501 Not Implemented",
     '502' : "502 Bad Gateway",
