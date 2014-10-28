@@ -49,5 +49,15 @@ class PagerDuty(callbacks.Plugin):
 
 Class = PagerDuty
 
+class Pagerduty(callbacks.Plugin):
+	"""This is a plugin that will integrate with PagerDuty API
+	to query, initially, data from PagerDuty, like who's on call,
+	etc.
+	"""
+
+	def __init__(self, irc):
+		self.__parent = super(PagerDuty, self)
+		self.__parent__.__init__(irc)
+
 
 # vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
